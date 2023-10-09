@@ -1,26 +1,25 @@
 import express from "express";
 
 import {
-createPagesController,
-getPagesByNombreController,
-getPagesByFechaController
-  
+  createPagesController,
+  getPagesByFechaController,
+  getPagesByNombreController,
 } from "./dependencies";
 
 const pagesRouter = express.Router();
 
 pagesRouter.post(
-  "/pages/create",  
+  "/pages/create",
   createPagesController.run.bind(createPagesController)
 );
 
 pagesRouter.post(
-  "/pages/get",  
+  "/pages/get",
   getPagesByNombreController.run.bind(getPagesByNombreController)
 );
 
 pagesRouter.post(
-  "/pages/get/fecha",  
+  "/pages/get/fecha",
   getPagesByFechaController.run.bind(getPagesByFechaController)
 );
 

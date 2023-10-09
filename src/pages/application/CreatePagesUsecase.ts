@@ -1,5 +1,5 @@
-import { PagesRepository } from "../domain/PagesRepository";
 import { Pages } from "../domain/pages";
+import { PagesRepository } from "../domain/PagesRepository";
 
 export class CreatePagesUsecase {
   constructor(readonly pagesRepository: PagesRepository) {}

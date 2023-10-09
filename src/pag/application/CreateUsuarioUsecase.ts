@@ -1,6 +1,5 @@
-import { PageARepository } from "../domain/UsuarioRepository";
 import { PageA } from "../domain/pagesA";
-
+import { PageARepository } from "../domain/UsuarioRepository";
 
 export class CreatePageAUsecase {
   constructor(readonly pageARepository: PageARepository) {}

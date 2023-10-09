@@ -1,33 +1,25 @@
 import { pool } from "../../database";
-import { PageARepository } from "../domain/UsuarioRepository";
 import { PageA } from "../domain/pagesA";
+import { PageARepository } from "../domain/UsuarioRepository";
 
+export class PostgresPageARepository implements PageARepository {
+  async createPage(pageA: PageA): Promise<PageA | null | boolean> {
+    const sql =
+      "INSERT INTO pagesa (id,nombre,url) VALUES ($1, $2, $3) RETURNING *";
+    const values = [pageA.id, pageA.nombre, pageA.url];
 
-export class PostgresPageARepository implements PageARepository {  
+    try {
+      const result = await pool.query(sql, values);
 
-  async createPage(pageA: PageA): Promise<PageA | null | boolean> {              
-          const sql =
-            "INSERT INTO pagesa (id,nombre,url) VALUES ($1, $2, $3) RETURNING *";
-          const values = [
-            pageA.id,
-            pageA.nombre,          
-            pageA.url,          
-          ];
-          
-          try {
-            const result = await pool.query(sql, values);
+      if (result.rows.length > 0) {
+        return true;
+      }
 
-            if (result.rows.length > 0) {                          
-              return true;
-            }
-
-            return null;
-          } catch (error) {            
-            throw error;
-          }
-    
+      return null;
+    } catch (error) {
+      throw error;
+    }
   }
-
 
   async getPagesA(): Promise<PageA[] | null> {
     const sql = "SELECT * FROM pagesa";
@@ -37,10 +29,9 @@ export class PostgresPageARepository implements PageARepository {
       const psicologos: PageA[] = result.rows.map((pageAData: any) => ({
         id: pageAData.id,
         nombre: pageAData.nombre,
-        url: pageAData.url,       
+        url: pageAData.url,
       }));
       return psicologos;
-      
     } catch (error) {
       throw error;
     }
