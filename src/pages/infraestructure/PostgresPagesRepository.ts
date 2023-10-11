@@ -55,13 +55,14 @@ export class PostgresPagesRepository implements PagesRepository {
     }
   }
 
-  async getPagesByFecha(f1: string, f2: string): Promise<Pages[] | null> {
-    console.log(f1);
-    console.log(f2);
-
-    // const sql = "SELECT * FROM pages where namepage=$1";
-    const sql = "SELECT * FROM pages WHERE fecha >= $1 AND fecha <= $2";
-    const values = [f1, f2];
+  async getPagesByFecha(
+    f1: string,
+    f2: string,
+    nombre: string
+  ): Promise<Pages[] | null> {
+    const sql =
+      "SELECT * FROM pages WHERE namepage = $3 and (fecha >= $1 AND fecha <= $2)";
+    const values = [f1, f2, nombre];
 
     try {
       const result = await pool.query(sql, values);
